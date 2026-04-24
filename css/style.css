@@ -1,0 +1,122 @@
+/* Custom styles for Aremu Eatry */
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    padding-top: 80px;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    animation: fadeIn 2s ease-in;
+    margin-top: -60px;
+    padding-top: 80px;
+}
+
+.hero .row:last-child {
+    justify-content: center;
+}
+
+.hero .row:last-child .col-md-3 {
+    flex: 0 0 calc(33.333% - 20px);
+    margin: 10px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.menu .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu .card .card-img-top {
+    height: 150px;
+    object-fit: cover;
+}
+
+.menu .card .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.menu .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.price {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.add-to-cart {
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #0056b3;
+}
+
+#cart-items .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#total {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.order {
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.menu .input-group {
+    display: flex;
+    gap: 2px;
+}
+
+.menu .input-group input[type="number"] {
+    max-width: 60px;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.menu .input-group .btn {
+    flex: 1;
+    padding: 0.375rem;
+    font-size: 0.875rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero .row {
+        text-align: center;
+    }
+    .hero img {
+        margin-top: 20px;
+    }
+}
