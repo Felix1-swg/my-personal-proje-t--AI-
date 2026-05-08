@@ -7,12 +7,13 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    background: #1a1a1a !important;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-bottom: 3px solid #FFD700;
 }
 
 header nav a {
@@ -24,7 +25,7 @@ header h1 {
 }
 
 .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #1a1a1a;
     color: white;
     animation: fadeIn 2s ease-in;
     margin-top: -60px;
@@ -102,7 +103,7 @@ header h1 {
 
 .price {
     font-weight: bold;
-    color: #28a745;
+    color: #FFD700;
     font-size: 1.1rem;
     margin: 0.5rem 0;
 }
@@ -110,10 +111,15 @@ header h1 {
 .add-to-cart {
     transition: background-color 0.3s ease;
     font-size: 0.95rem;
+    background-color: #FFD700;
+    color: #1a1a1a;
+    border-color: #FFD700;
 }
 
 .add-to-cart:hover {
-    background-color: #0056b3;
+    background-color: #FFC700;
+    color: #1a1a1a;
+    border-color: #FFC700;
 }
 
 #cart-items .list-group-item {
@@ -174,7 +180,7 @@ header h1 {
         top: 60px;
         left: 0;
         right: 0;
-        background: #667eea;
+        background: #0a0a0a;
         padding: 1rem;
         display: flex;
         flex-direction: column;
@@ -185,8 +191,26 @@ header h1 {
         font-size: 1.5rem;
     }
     
-    .hero .col-md-6:nth-child(2) {
+    .hero img {
         display: none;
+    }
+    
+    .hero .col-md-6 {
+        max-width: 100%;
+    }
+    
+    .hero h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero p {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero .btn {
+        font-size: 0.95rem;
     }
     
     .hero .row:last-child .col-md-3 {

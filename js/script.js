@@ -37,8 +37,62 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartItems = document.getElementById('cart-items');
     const totalElement = document.getElementById('total');
     const orderForm = document.getElementById('order-form');
+    const CART_KEY = 'aremusCart';
+    const ORDER_DRAFT_KEY = 'aremusOrderDraft';
     let cart = [];
     let total = 0;
+
+    function saveCartToStorage() {
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    function loadCartFromStorage() {
+        const savedCart = localStorage.getItem(CART_KEY);
+        if (savedCart) {
+            try {
+                cart = JSON.parse(savedCart) || [];
+            } catch (error) {
+                cart = [];
+            }
+        }
+    }
+
+    function saveOrderDraft() {
+        const draft = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            address: document.getElementById('address').value
+        };
+        localStorage.setItem(ORDER_DRAFT_KEY, JSON.stringify(draft));
+    }
+
+    function loadOrderDraft() {
+        const savedDraft = localStorage.getItem(ORDER_DRAFT_KEY);
+        if (!savedDraft) return;
+
+        try {
+            const draft = JSON.parse(savedDraft);
+            document.getElementById('name').value = draft.name || '';
+            document.getElementById('email').value = draft.email || '';
+            document.getElementById('phone').value = draft.phone || '';
+            document.getElementById('address').value = draft.address || '';
+        } catch (error) {
+            // ignore invalid draft data
+        }
+    }
+
+    function bindDraftSave() {
+        const inputs = document.querySelectorAll('#order-form input, #order-form textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', saveOrderDraft);
+        });
+    }
+
+    loadCartFromStorage();
+    updateCart();
+    loadOrderDraft();
+    bindDraftSave();
     
     // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -179,6 +233,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 cartCountMobile.style.display = 'none';
             }
         }
+
+        saveCartToStorage();
         
         // Add remove functionality for groups
         document.querySelectorAll('.remove-group').forEach(button => {
@@ -248,6 +304,8 @@ document.addEventListener('DOMContentLoaded', function() {
         cart = [];
         updateCart();
         orderForm.reset();
+        localStorage.removeItem(CART_KEY);
+        localStorage.removeItem(ORDER_DRAFT_KEY);
     });
 
     // Smooth scrolling for navigation
