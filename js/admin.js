@@ -48,11 +48,15 @@ function displayOrders() {
                     <div class="col-md-6">
                         <h6>Order Items:</h6>
                         <ul class="list-group">
-                            ${order.items.map(item => `<li class="list-group-item">${item.item} - ₦${item.price.toFixed(2)}</li>`).join('')}
+                            ${order.items.map(item => {
+                                let itemText = `${item.item} - ₦${item.price.toFixed(2)}`;
+                                if (item.meat || item.soup) {
+                                    itemText += `<br><small>(${item.meat || 'No meat'} + ${item.soup || 'No soup'})</small>`;
+                                }
+                                return `<li class="list-group-item">${itemText}</li>`;
+                            }).join('')}
                         </ul>
-                        <p class="mt-2"><strong>Meat:</strong> ${order.meat || 'Not specified'}</p>
-                        <p><strong>Soup:</strong> ${order.soup || 'Not specified'}</p>
-                        <p><strong>Total: ₦${order.total.toFixed(2)}</strong></p>
+                        <p class="mt-2"><strong>Total: ₦${order.total.toFixed(2)}</strong></p>
                     </div>
                 </div>
             </div>

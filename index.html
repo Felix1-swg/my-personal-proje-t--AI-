@@ -10,19 +10,39 @@
 </head>
 <body>
     <header class="text-white py-3">
-        <div class="container">
+        <div class="container-fluid px-3 px-md-5">
             <div class="row align-items-center">
-                <div class="col-md-6">
+                <div class="col-6 col-md-6">
                     <h1 class="mb-0">Aremu's</h1>
                 </div>
-                <div class="col-md-6 text-end">
-                    <nav>
-                        <a href="#home" class="text-white me-3">Home</a>
-                        <a href="#menu" class="text-white me-3">Menu</a>
-                        <a href="#order" class="text-white">Order</a>
+                <div class="col-6 col-md-6 text-end">
+                    <nav class="d-none d-md-flex gap-3 align-items-center justify-content-end">
+                        <a href="#home" class="text-white" style="text-decoration: none;">Home</a>
+                        <a href="#menu" class="text-white" style="text-decoration: none;">Menu</a>
+                        <a href="#order" class="text-white" style="text-decoration: none;">Order</a>
+                        <a href="#" class="text-white" id="cart-icon" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="bi bi-cart"></i>
+                            <span id="cart-count" class="badge bg-danger">0</span>
+                        </a>
                     </nav>
+                    <!-- Mobile Menu -->
+                    <div class="d-md-none d-flex gap-2 align-items-center justify-content-end">
+                        <a href="#" class="text-white" id="cart-icon-mobile" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="bi bi-cart"></i>
+                            <span id="cart-count-mobile" class="badge bg-danger">0</span>
+                        </a>
+                        <button class="btn btn-link text-white p-0" type="button" id="mobile-menu-toggle">
+                            <i class="bi bi-list" style="font-size: 1.5rem;"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
+            <!-- Mobile Navigation Menu -->
+            <nav class="d-md-none mt-3" id="mobile-nav" style="display: none;">
+                <a href="#home" class="text-white d-block mb-2">Home</a>
+                <a href="#menu" class="text-white d-block mb-2">Menu</a>
+                <a href="#order" class="text-white d-block mb-2">Order</a>
+            </nav>
         </div>
     </header>
 
@@ -71,16 +91,6 @@
                         <div class="card-body">
                             <h5 class="card-title">Iyan</h5>
                             <p class="card-text">Pounded yam, traditional and filling with rich soups.</p>
-                            <select class="form-control form-control-sm mb-2 meat-select">
-                                <option value="">Select Meat</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Turkey">Turkey</option>
-                                <option value="Ponmon">Ponmon</option>
-                                <option value="Cheese">Cheese</option>
-                            </select>
                             <select class="form-control form-control-sm mb-2 soup-select">
                                 <option value="">Select Soup</option>
                                 <option value="Egusi Soup">Egusi Soup</option>
@@ -102,14 +112,6 @@
                         <div class="card-body">
                             <h5 class="card-title">Eba</h5>
                             <p class="card-text">Garri-based swallow perfect with egusi or vegetable soup.</p>
-                            <select class="form-control form-control-sm mb-2 meat-select">
-                                <option value="">Select Meat</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Turkey">Turkey</option>
-                            </select>
                             <select class="form-control form-control-sm mb-2 soup-select">
                                 <option value="">Select Soup</option>
                                 <option value="Egusi Soup">Egusi Soup</option>
@@ -131,28 +133,6 @@
                         <div class="card-body">
                             <h5 class="card-title">Amala</h5>
                             <p class="card-text">Yam flour swallow, a Yoruba delicacy with gbegiri and ewedu.</p>
-                            <select class="form-control form-control-sm mb-2 meat-select">
-                                <option value="">Select Meat</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Turkey">Turkey</option>
-                            </select>
-                            <select class="form-control form-control-sm mb-2 soup-select">
-                                <option value="">Select Soup</option>
-                                <option value="Egusi Soup">Egusi Soup</option>
-                                <option value="Vegetable Soup">Vegetable Soup</option>
-                                <option value="Ogbono Soup">Ogbono Soup</option>
-                                <option value="Ewedu Soup">Ewedu Soup</option>
-                             select class="form-control form-control-sm mb-2 meat-select">
-                                <option value="">Select Meat</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Turkey">Turkey</option>
-                            </select>
                             <select class="form-control form-control-sm mb-2 soup-select">
                                 <option value="">Select Soup</option>
                                 <option value="Egusi Soup">Egusi Soup</option>
@@ -160,8 +140,6 @@
                                 <option value="Ogbono Soup">Ogbono Soup</option>
                                 <option value="Ewedu Soup">Ewedu Soup</option>
                                 <option value="Gbegiri Soup">Gbegiri Soup</option>
-                            </select>
-                            <   <option value="Gbegiri Soup">Gbegiri Soup</option>
                             </select>
                             <div class="input-group mb-2">
                                 <input type="number" class="form-control" min="1" value="1" placeholder="Qty">
@@ -175,14 +153,6 @@
                         <img src="images/fufu" alt="Fufu" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Fufu</h5>
-                            <select class="form-control form-control-sm mb-2 meat-select">
-                                <option value="">Select Meat</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Turkey">Turkey</option>
-                            </select>
                             <select class="form-control form-control-sm mb-2 soup-select">
                                 <option value="">Select Soup</option>
                                 <option value="Egusi Soup">Egusi Soup</option>
@@ -205,14 +175,6 @@
                         <img src="images/semo" alt="Semo" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Semo</h5>
-                            <select class="form-control form-control-sm mb-2 meat-select">
-                                <option value="">Select Meat</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Turkey">Turkey</option>
-                            </select>
                             <select class="form-control form-control-sm mb-2 soup-select">
                                 <option value="">Select Soup</option>
                                 <option value="Egusi Soup">Egusi Soup</option>
@@ -236,24 +198,6 @@
                         <div class="card-body">
                             <h5 class="card-title">Rice</h5>
                             <p class="card-text">Delicious Nigerian rice dish with vegetables and spices.</p>
-                            <select class="form-control form-control-sm mb-2 meat-select">
-                                <option value="">Select Meat</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Turkey">Turkey</option>
-                                <option value="Ponmon">Ponmon</option>
-                                <option value="Cheese">Cheese</option>
-                            </select>
-                            <select class="form-control form-control-sm mb-2 soup-select">
-                                <option value="">Select Soup</option>
-                                <option value="Egusi Soup">Egusi Soup</option>
-                                <option value="Vegetable Soup">Vegetable Soup</option>
-                                <option value="Ogbono Soup">Ogbono Soup</option>
-                                <option value="Ewedu Soup">Ewedu Soup</option>
-                                <option value="Gbegiri Soup">Gbegiri Soup</option>
-                            </select>
                             <div class="input-group mb-2">
                                 <input type="number" class="form-control" min="1" value="1" placeholder="Qty">
                                 <button class="btn btn-success add-to-cart" data-item="Rice" data-price="1600">Add</button>
@@ -332,142 +276,52 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Soup Section -->
-            <h3 class="mb-3">Soup Options</h3>
-            <div class="row">
-                <div class="col-md-2 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Egusi Soup</h5>
-                            <p class="card-text">Rich melon seed soup.</p>
-                            <p class="price">₦600</p>
-                            <div class="input-group mb-2">
-                                <input type="number" class="form-control" min="1" value="1" placeholder="Qty">
-                                <button class="btn btn-success add-to-cart" data-item="Egusi Soup" data-price="600">Add</button>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="col-md-2 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Vegetable Soup</h5>
-                            <p class="card-text">Fresh vegetable soup.</p>
-                            <p class="price">₦500</p>
-                            <div class="input-group mb-2">
-                                <input type="number" class="form-control" min="1" value="1" placeholder="Qty">
-                                <button class="btn btn-success add-to-cart" data-item="Vegetable Soup" data-price="500">Add</button>
+                <div class="modal-body">
+                    <div id="cart" class="mb-4">
+                        <h4>Cart</h4>
+                        <ul id="cart-items" class="list-group"></ul>
+                        <p id="total">Total: ₦0.00</p>
+                    </div>
+                    <form id="order-form">
+                        <h4>Order Details</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <textarea class="form-control" id="address" rows="3" required></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Ogbono Soup</h5>
-                            <p class="card-text">Traditional ogbono soup.</p>
-                            <p class="price">₦700</p>
-                            <div class="input-group mb-2">
-                                <input type="number" class="form-control" min="1" value="1" placeholder="Qty">
-                                <button class="btn btn-success add-to-cart" data-item="Ogbono Soup" data-price="700">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Ewedu Soup</h5>
-                            <p class="card-text">Smooth ewedu soup.</p>
-                            <p class="price">₦550</p>
-                            <div class="input-group mb-2">
-                                <input type="number" class="form-control" min="1" value="1" placeholder="Qty">
-                                <button class="btn btn-success add-to-cart" data-item="Ewedu Soup" data-price="550">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Gbegiri Soup</h5>
-                            <p class="card-text">Creamy gbegiri soup.</p>
-                            <p class="price">₦650</p>
-                            <div class="input-group mb-2">
-                                <input type="number" class="form-control" min="1" value="1" placeholder="Qty">
-                                <button class="btn btn-success add-to-cart" data-item="Gbegiri Soup" data-price="650">Add</button>
-                            </div>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-success">Place Order</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <section id="order" class="order bg-light py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Your Order</h2>
-            <div id="cart" class="mb-4">
-                <h4>Cart</h4>
-                <ul id="cart-items" class="list-group"></ul>
-                <p id="total">Total: ₦0.00</p>
-            </div>
-            <form id="order-form">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="tel" class="form-control" id="phone" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="address" rows="3" required></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="meat" class="form-label">Choose Meat</label>
-                            <select class="form-control" id="meat" required>
-                                <option value="">-- Select Meat --</option>
-                                <option value="Beef">Beef</option>
-                                <option value="Chicken">Chicken</option>
-                                <option value="Fish">Fish</option>
-                                <option value="Goat">Goat</option>
-                                <option value="Turkey">Turkey</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="soup" class="form-label">Choose Soup</label>
-                            <select class="form-control" id="soup" required>
-                                <option value="">-- Select Soup --</option>
-                                <option value="Egusi Soup">Egusi Soup</option>
-                                <option value="Vegetable Soup">Vegetable Soup</option>
-                                <option value="Ogbono Soup">Ogbono Soup</option>
-                                <option value="Ewedu Soup">Ewedu Soup</option>
-                                <option value="Gbegiri Soup">Gbegiri Soup</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-success">Place Order</button>
-            </form>
-        </div>
-    </section>
 
     <footer class="bg-dark text-white py-3">
         <div class="container text-center">

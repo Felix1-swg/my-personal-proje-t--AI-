@@ -11,6 +11,7 @@ function checkOperatingHours() {
         const orderSection = document.getElementById('order');
         const orderForm = document.getElementById('order-form');
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const cartIcon = document.getElementById('cart-icon');
         
         // Show closed message
         const closedAlert = document.createElement('div');
@@ -27,6 +28,8 @@ function checkOperatingHours() {
         addToCartButtons.forEach(button => {
             button.disabled = true;
         });
+        cartIcon.style.pointerEvents = 'none';
+        cartIcon.style.opacity = '0.5';
     }
 }
 
@@ -37,6 +40,27 @@ document.addEventListener('DOMContentLoaded', function() {
     let cart = [];
     let total = 0;
     
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function() {
+            if (mobileNav.style.display === 'none') {
+                mobileNav.style.display = 'block';
+            } else {
+                mobileNav.style.display = 'none';
+            }
+        });
+    }
+    
+    // Close mobile menu when links are clicked
+    const mobileLinks = document.querySelectorAll('#mobile-nav a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            mobileNav.style.display = 'none';
+        });
+    });
+    
     // Check if restaurant is open
     checkOperatingHours();
 
@@ -46,9 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const item = this.getAttribute('data-item');
             const price = parseFloat(this.getAttribute('data-price'));
             
-            // Get quantity from input field
+            // Get quantity from input field, default to one when absent
             const quantityInput = this.parentElement.querySelector('input[type="number"]');
-            const quantity = parseInt(quantityInput.value) || 1;
+            const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
             
             // Get meat and soup selections if they exist (for food items)
             const cardBody = this.closest('.card-body');
@@ -60,9 +84,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (meatSelect) {
                 meat = meatSelect.value || '';
+                if (!meat) {
+                    alert(`Please select a meat option for ${item}.`);
+                    return;
+                }
             }
             if (soupSelect) {
                 soup = soupSelect.value || '';
+                if (!soup) {
+                    alert(`Please select a soup option for ${item}.`);
+                    return;
+                }
             }
             
             // Add multiple items based on quantity
@@ -84,30 +116,83 @@ document.addEventListener('DOMContentLoaded', function() {
         cartItems.innerHTML = '';
         total = 0;
         
+        // Group items by their food + soup combination
+        const groupedItems = {};
         cart.forEach((item, index) => {
+            const soup = item.soup || 'No Soup';
+            const key = `${item.item}___${soup}`;
+            
+            if (!groupedItems[key]) {
+                groupedItems[key] = {
+                    item: item.item,
+                    soup: soup,
+                    price: item.price,
+                    quantity: 0,
+                    indices: []
+                };
+            }
+            groupedItems[key].quantity++;
+            groupedItems[key].indices.push(index);
             total += item.price;
+        });
+        
+        // Display grouped items
+        Object.keys(groupedItems).forEach((key) => {
+            const group = groupedItems[key];
             const li = document.createElement('li');
             li.className = 'list-group-item';
             
-            let itemDisplay = `${item.item} - ₦${item.price.toFixed(2)}`;
-            if (item.meat || item.soup) {
-                itemDisplay += `<br><small>(${item.meat || 'No meat'} + ${item.soup || 'No soup'})</small>`;
+            // Create item display with quantity
+            let itemDisplay = `<div class="cart-item-info">`;
+            itemDisplay += `<strong>${group.quantity}x ${group.item}`;
+            if (group.soup && group.soup !== 'No Soup') {
+                itemDisplay += ` + ${group.soup}`;
             }
+            itemDisplay += `</strong>`;
+            itemDisplay += `<br><small>₦${group.price.toFixed(2)} each × ${group.quantity} = ₦${(group.price * group.quantity).toFixed(2)}</small>`;
+            itemDisplay += `</div>`;
             
-            li.innerHTML = `
-                ${itemDisplay}
-                <button class="btn btn-sm btn-danger remove-item" data-index="${index}">Remove</button>
-            `;
+            // Create remove button for all items in this group
+            const removeBtn = `<button class="btn btn-sm btn-danger remove-group" data-key="${key}">Remove</button>`;
+            
+            li.innerHTML = itemDisplay + removeBtn;
             cartItems.appendChild(li);
         });
         
         totalElement.textContent = `Total: ₦${total.toFixed(2)}`;
         
-        // Add remove functionality
-        document.querySelectorAll('.remove-item').forEach(button => {
+        // Update cart count in nav (both desktop and mobile)
+        const cartCount = document.getElementById('cart-count');
+        const cartCountMobile = document.getElementById('cart-count-mobile');
+        cartCount.textContent = cart.length;
+        if (cartCountMobile) {
+            cartCountMobile.textContent = cart.length;
+        }
+        if (cart.length > 0) {
+            cartCount.style.display = 'inline';
+            if (cartCountMobile) {
+                cartCountMobile.style.display = 'inline';
+            }
+        } else {
+            cartCount.style.display = 'none';
+            if (cartCountMobile) {
+                cartCountMobile.style.display = 'none';
+            }
+        }
+        
+        // Add remove functionality for groups
+        document.querySelectorAll('.remove-group').forEach(button => {
             button.addEventListener('click', function() {
-                const index = parseInt(this.getAttribute('data-index'));
-                cart.splice(index, 1);
+                const key = this.getAttribute('data-key');
+                // Remove all items with this key
+                const parts = key.split('___');
+                const itemName = parts[0];
+                const soupName = parts[1];
+                
+                cart = cart.filter(item => {
+                    const itemSoup = item.soup || 'No Soup';
+                    return !(item.item === itemName && itemSoup === soupName);
+                });
                 updateCart();
             });
         });
@@ -131,18 +216,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
-        const meat = document.getElementById('meat').value;
-        const soup = document.getElementById('soup').value;
-        
-        // Validate meat and soup selections
-        if (!meat) {
-            alert('Please select a meat option.');
-            return;
-        }
-        if (!soup) {
-            alert('Please select a soup option.');
-            return;
-        }
         
         // Create order object
         const now = new Date();
@@ -153,8 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
             email: email,
             phone: phone,
             address: address,
-            meat: meat,
-            soup: soup,
             items: [...cart],
             total: total
         };
@@ -165,7 +236,13 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('orders', JSON.stringify(orders));
         
         // Simple order processing (in a real app, this would send to server)
-        alert(`Thank you, ${name}! Your order has been placed. Total: ₦${total.toFixed(2)}\n\nMeat: ${meat}\nSoup: ${soup}\n\nWe'll deliver to: ${address}\nContact: ${phone}`);
+        alert(`Thank you, ${name}! Your order has been placed. Total: ₦${total.toFixed(2)}\n\nWe'll deliver to: ${address}\nContact: ${phone}`);
+        
+        // Close modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+        if (modal) {
+            modal.hide();
+        }
         
         // Reset cart and form
         cart = [];
