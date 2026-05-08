@@ -191,6 +191,11 @@ header h1 {
         font-size: 1.5rem;
     }
     
+    .hero {
+        padding-top: 100px;
+        padding-bottom: 50px;
+    }
+    
     .hero img {
         display: none;
     }
